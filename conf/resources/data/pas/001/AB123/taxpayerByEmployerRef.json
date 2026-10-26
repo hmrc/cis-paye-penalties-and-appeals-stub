@@ -1,0 +1,18 @@
+{
+  "uniqueId": "1",
+  "taxOfficeNumber": "001",
+  "taxOfficeRef": "AB123",
+  "aoDistrict": "123",
+  "aoPayType": "P",
+  "aoCheckCode": "A",
+  "aoReference": "456",
+  "validBusinessAddr": "1",
+  "correlation": "2",
+  "ggAgentId": "AGENTREF1",
+  "employerName1": "Employer 1",
+  "employerName2": "Employer 2",
+  "agentOwnRef": "AO1",
+  "schemeName": "Scheme 1",
+  "utr": "11111111111",
+  "enrolledSig": "Y"
+}

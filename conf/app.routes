@@ -1,3 +1,6 @@
 # microservice specific routes
 
-GET        /hello-world             uk.gov.hmrc.cispayepenaltiesandappealsstub.controllers.MicroserviceHelloWorldController.hello
+POST        /cis/appeal               uk.gov.hmrc.cispayepenaltiesandappealsstub.controllers.ManageCisController.createCisAppeal()
+POST        /cis/penalties            uk.gov.hmrc.cispayepenaltiesandappealsstub.controllers.ManageCisController.getCisAppealablePenalties()
+POST        /cis/penalty              uk.gov.hmrc.cispayepenaltiesandappealsstub.controllers.ManageCisController.getCisAppealablePenalty()
+POST        /cis/taxpayer             uk.gov.hmrc.cispayepenaltiesandappealsstub.controllers.ManageCisController.getCisTaxpayer()
