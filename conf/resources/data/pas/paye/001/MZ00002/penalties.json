@@ -1,0 +1,107 @@
+[
+  {
+    "uniqueId": 1,
+    "issueDate": "2026-10-01",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 998.23
+  },
+  {
+    "uniqueId": 2,
+    "issueDate": "2026-10-02",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 997.23
+  },
+  {
+    "uniqueId": 3,
+    "issueDate": "2026-10-25",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 996.23
+  },
+  {
+    "uniqueId": 4,
+    "issueDate": "2026-10-22",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 995.23
+  },
+  {
+    "uniqueId": 5,
+    "issueDate": "2026-10-29",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 1002.23
+  },
+  {
+    "uniqueId": 6,
+    "issueDate": "2026-10-25",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 901.23
+  },
+  {
+    "uniqueId": 7,
+    "issueDate": "2026-10-07",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 823.17
+  },
+  {
+    "uniqueId": 8,
+    "issueDate": "2026-10-14",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 148.93
+  },
+  {
+    "uniqueId": 9,
+    "issueDate": "2026-10-05",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 699.55
+  },
+  {
+    "uniqueId": 10,
+    "issueDate": "2026-10-13",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 996.00
+  },
+  {
+    "uniqueId": 11,
+    "issueDate": "2026-10-17",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 444.44
+  },
+  {
+    "uniqueId": 12,
+    "issueDate": "2026-10-30",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 99.23
+  },
+  {
+    "uniqueId": 13,
+    "issueDate": "2026-10-31",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 9960.23
+  },
+  {
+    "uniqueId": 14,
+    "issueDate": "2026-10-11",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 296.23
+  },
+  {
+    "uniqueId": 15,
+    "issueDate": "2026-10-09",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "F",
+    "penaltyAmount": 120000.27
+  }
+]
