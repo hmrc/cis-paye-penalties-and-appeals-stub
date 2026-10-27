@@ -32,6 +32,8 @@ import scala.util.{Failure, Success, Try}
 class ManageCisController @Inject()(cc: ControllerComponents, override val executionContext: ExecutionContext)
   extends BackendController(cc) with StubResource with Logging {
 
+  val basePath = "/resources/data/pas/cis"
+
   def createCisAppeal: Action[JsValue] = Action.async(parse.json) { implicit request =>
     request.body.validate[CreateAppealRequest].fold(
       invalid =>
@@ -55,7 +57,7 @@ class ManageCisController @Inject()(cc: ControllerComponents, override val execu
         Future.successful(BadRequest(Json.obj("message" -> s"Invalid payload: $invalid")))
       },
       payload => {
-        val fullPath = s"/resources/data/pas/${payload.hmrcOfficeNumber}/${payload.schemeReferenceNumber}/penalties.json"
+        val fullPath = s"$basePath/${payload.hmrcOfficeNumber}/${payload.schemeReferenceNumber}/penalties.json"
 
         findResource(fullPath) match {
           case Some(content) =>
@@ -99,7 +101,7 @@ class ManageCisController @Inject()(cc: ControllerComponents, override val execu
         Future.successful(BadRequest(Json.obj("message" -> s"Invalid payload: $invalid")))
       },
       payload => {
-        val fullPath = s"/resources/data/pas/${payload.hmrcOfficeNumber}/${payload.schemeReferenceNumber}/penalties.json"
+        val fullPath = s"$basePath/${payload.hmrcOfficeNumber}/${payload.schemeReferenceNumber}/penalties.json"
 
         findResource(fullPath) match {
           case Some(content) =>
@@ -131,7 +133,7 @@ class ManageCisController @Inject()(cc: ControllerComponents, override val execu
         logger.error(s"[ManageCisController][getCisTaxpayer]: Failed to validate payload, errors: $invalid")
         Future.successful(BadRequest(Json.obj("message" -> s"Invalid payload: $invalid"))),
       payload => {
-        val fullPath = s"/resources/data/pas/${payload.taxOfficeNumber}/${payload.taxOfficeReference}/taxpayerByEmployerRef.json"
+        val fullPath = s"$basePath/${payload.taxOfficeNumber}/${payload.taxOfficeReference}/taxpayerByEmployerRef.json"
 
         findResource(fullPath) match {
           case Some(content) => Future.successful(jsonResourceAsResponse(fullPath))
