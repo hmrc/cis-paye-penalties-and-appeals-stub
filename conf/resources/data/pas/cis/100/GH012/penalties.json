@@ -1,0 +1,9 @@
+[
+  {
+    "penaltyId": 100001,
+    "issueDate": "2026-10-23",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS4",
+    "penaltyAmount": 998.23
+  }
+]

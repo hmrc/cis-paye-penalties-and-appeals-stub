@@ -1,0 +1,107 @@
+[
+  {
+    "penaltyId": 100001,
+    "issueDate": "2026-10-01",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS4",
+    "penaltyAmount": 998.23
+  },
+  {
+    "penaltyId": 100002,
+    "issueDate": "2026-10-02",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS3",
+    "penaltyAmount": 997.23
+  },
+  {
+    "penaltyId": 100003,
+    "issueDate": "2026-10-25",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS5",
+    "penaltyAmount": 996.23
+  },
+  {
+    "penaltyId": 100004,
+    "issueDate": "2026-10-22",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS6",
+    "penaltyAmount": 995.23
+  },
+  {
+    "penaltyId": 100005,
+    "issueDate": "2026-10-29",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS3",
+    "penaltyAmount": 1002.23
+  },
+  {
+    "penaltyId": 100006,
+    "issueDate": "2026-10-25",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS4",
+    "penaltyAmount": 901.23
+  },
+  {
+    "penaltyId": 100007,
+    "issueDate": "2026-10-07",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS4",
+    "penaltyAmount": 823.17
+  },
+  {
+    "penaltyId": 100008,
+    "issueDate": "2026-10-14",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS6",
+    "penaltyAmount": 148.93
+  },
+  {
+    "penaltyId": 100009,
+    "issueDate": "2026-10-05",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS5",
+    "penaltyAmount": 699.55
+  },
+  {
+    "penaltyId": 100010,
+    "issueDate": "2026-10-13",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS3",
+    "penaltyAmount": 996.00
+  },
+  {
+    "penaltyId": 100011,
+    "issueDate": "2026-10-17",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS5",
+    "penaltyAmount": 444.44
+  },
+  {
+    "penaltyId": 100012,
+    "issueDate": "2026-10-30",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS4",
+    "penaltyAmount": 99.23
+  },
+  {
+    "penaltyId": 100013,
+    "issueDate": "2026-10-31",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS3",
+    "penaltyAmount": 9960.23
+  },
+  {
+    "penaltyId": 100014,
+    "issueDate": "2026-10-11",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS6",
+    "penaltyAmount": 296.23
+  },
+  {
+    "penaltyId": 100015,
+    "issueDate": "2026-10-09",
+    "taxPeriodEndDate": "2027-04-01",
+    "penaltyType": "CIS3",
+    "penaltyAmount": 120000.27
+  }
+]
