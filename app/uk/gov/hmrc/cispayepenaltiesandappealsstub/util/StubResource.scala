@@ -16,15 +16,17 @@
 
 package uk.gov.hmrc.cispayepenaltiesandappealsstub.util
 
+import models.GetAppealablePenaltyItem
 import play.api.Logging
 import play.api.http.{ContentTypes, Status}
-import play.api.mvc.Results.UnprocessableEntity
+import play.api.libs.json.Json
 import play.api.mvc.*
+import play.api.mvc.Results.UnprocessableEntity
 
-import java.io.{File, InputStream}
-import java.nio.file.FileSystems
+import java.io.InputStream
 import scala.concurrent.ExecutionContext
 import scala.io.Source
+import scala.util.Try
 
 trait StubResource extends Results with ContentTypes with Status with Logging {
 
@@ -63,4 +65,22 @@ trait StubResource extends Results with ContentTypes with Status with Logging {
     try Source.fromInputStream(is).mkString
     finally is.close()
 
+  // Penalties helpers
+  val basePath = "/resources/data/pas/"
+
+  def getAllPenalties(service: String, hmrcOfficeNumber: String, schemeReferenceNumber: String): Option[List[GetAppealablePenaltyItem]] = {
+    val fullPath = s"$basePath/$service/$hmrcOfficeNumber/$schemeReferenceNumber/penalties.json"
+
+    for {
+      content <- findResource(fullPath)
+      json <- Try(Json.parse(content)).toOption
+      penalties <- json.validate[List[GetAppealablePenaltyItem]].asOpt
+    } yield penalties
+  }
+
+  def getPenaltyById(service: String, hmrcOfficeNumber: String, schemeReferenceNumber: String, penaltyId: Long): Option[GetAppealablePenaltyItem] = {
+    getAllPenalties(service, hmrcOfficeNumber, schemeReferenceNumber).flatMap { penalties =>
+      penalties.find(_.penaltyId == penaltyId)
+    }
+  }
 }

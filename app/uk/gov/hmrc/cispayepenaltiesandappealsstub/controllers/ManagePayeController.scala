@@ -26,13 +26,12 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.Try
 
 @Singleton
 class ManagePayeController @Inject()(cc: ControllerComponents, override val executionContext: ExecutionContext)
   extends BackendController(cc) with StubResource with Logging {
-
-  val basePath = "/resources/data/pas/paye"
+  
+  private val service = "paye"
 
   def createPayeAppeal: Action[JsValue] = Action.async(parse.json) { implicit request =>
     request.body.validate[CreateAppealRequest].fold(
@@ -53,13 +52,13 @@ class ManagePayeController @Inject()(cc: ControllerComponents, override val exec
   def getPayeAppealablePenalties: Action[JsValue] = Action.async(parse.json) { implicit request =>
     request.body.validate[GetAppealablePenaltiesRequest].fold(
       invalid => {
-        logger.error(s"[ManagePayeController][getPayeAppealablePenalty]: Failed to validate payload, errors: $invalid")
+        logger.error(s"[ManagePayeController][getPayeAppealablePenalties]: Failed to validate payload, errors: $invalid")
         Future.successful(BadRequest(Json.obj("message" -> s"Invalid payload: $invalid")))
       },
       payload => {
-        getAllPenalties(payload.hmrcOfficeNumber, payload.schemeReferenceNumber) match {
+        getAllPenalties(service, payload.hmrcOfficeNumber, payload.schemeReferenceNumber) match {
           case Some(penalties) =>
-            val sortedPenalties = penalties.sortBy(_.penaltyId.getOrElse(0L))(Ordering[Long].reverse)
+            val sortedPenalties = penalties.sortBy(_.penaltyId)(Ordering[Long].reverse)
 
             val startIndex = (payload.startRow - 1).toInt.max(0)
             val endIndex   = payload.endRow.toInt
@@ -77,8 +76,7 @@ class ManagePayeController @Inject()(cc: ControllerComponents, override val exec
       }
     )
   }
-
-
+  
   def getPayeAppealablePenalty: Action[JsValue] = Action.async(parse.json) { implicit request =>
     request.body.validate[GetAppealablePenaltyRequest].fold(
       invalid => {
@@ -86,9 +84,9 @@ class ManagePayeController @Inject()(cc: ControllerComponents, override val exec
         Future.successful(BadRequest(Json.obj("message" -> s"Invalid payload: $invalid")))
       },
       payload => {
-        getPenaltyById(payload.hmrcOfficeNumber, payload.schemeReferenceNumber, payload.penaltyId) match {
+        getPenaltyById(service, payload.hmrcOfficeNumber, payload.schemeReferenceNumber, payload.penaltyId) match {
           case Some(penalty) =>
-            Future.successful(Ok(Json.toJson(penalty.copy(penaltyId = None))))
+            Future.successful(Ok(Json.toJson(penalty)))
           case None =>
             Future.successful(NotFound)
         }
@@ -102,7 +100,7 @@ class ManagePayeController @Inject()(cc: ControllerComponents, override val exec
         logger.error(s"[ManagePayeController][getPayeTaxpayer]: Failed to validate payload, errors: $invalid")
         Future.successful(BadRequest(Json.obj("message" -> s"Invalid payload: $invalid"))),
       payload => {
-        val fullPath = s"$basePath/${payload.hmrcOfficeNumber}/${payload.schemeReferenceNumber}/taxpayerByEmployerRef.json"
+        val fullPath = s"$basePath/$service/${payload.hmrcOfficeNumber}/${payload.schemeReferenceNumber}/taxpayerByEmployerRef.json"
 
         findResource(fullPath) match {
           case Some(content) => Future.successful(jsonResourceAsResponse(fullPath))
@@ -131,21 +129,5 @@ class ManagePayeController @Inject()(cc: ControllerComponents, override val exec
         }
       }
     )
-  }
-
-  private def getAllPenalties(hmrcOfficeNumber: String, schemeReferenceNumber: String): Option[List[GetAppealablePenaltyResponse]] = {
-    val fullPath = s"$basePath/$hmrcOfficeNumber/$schemeReferenceNumber/penalties.json"
-
-    for {
-      content <- findResource(fullPath)
-      json <- Try(Json.parse(content)).toOption
-      penalties <- json.validate[List[GetAppealablePenaltyResponse]].asOpt
-    } yield penalties
-  }
-
-  private def getPenaltyById(hmrcOfficeNumber: String, schemeReferenceNumber: String, penaltyId: Long): Option[GetAppealablePenaltyResponse] = {
-    getAllPenalties(hmrcOfficeNumber, schemeReferenceNumber).flatMap { penalties =>
-      penalties.find(_.penaltyId.contains(penaltyId))
-    }
   }
 }

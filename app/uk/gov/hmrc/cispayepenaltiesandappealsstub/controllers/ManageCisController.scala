@@ -26,14 +26,13 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.Try
 
 @Singleton
 class ManageCisController @Inject()(cc: ControllerComponents, override val executionContext: ExecutionContext)
   extends BackendController(cc) with StubResource with Logging {
 
-  val basePath = "/resources/data/pas/cis"
-
+  private val service = "cis"
+  
   def createCisAppeal: Action[JsValue] = Action.async(parse.json) { implicit request =>
     request.body.validate[CreateAppealRequest].fold(
       invalid =>
@@ -57,9 +56,9 @@ class ManageCisController @Inject()(cc: ControllerComponents, override val execu
         Future.successful(BadRequest(Json.obj("message" -> s"Invalid payload: $invalid")))
       },
       payload => {
-        getAllPenalties(payload.hmrcOfficeNumber, payload.schemeReferenceNumber) match {
+        getAllPenalties(service, payload.hmrcOfficeNumber, payload.schemeReferenceNumber) match {
           case Some(penalties) =>
-            val sortedPenalties = penalties.sortBy(_.penaltyId.getOrElse(0L))(Ordering[Long].reverse)
+            val sortedPenalties = penalties.sortBy(_.penaltyId)(Ordering[Long].reverse)
 
             val startIndex = (payload.startRow - 1).toInt.max(0)
             val endIndex   = payload.endRow.toInt
@@ -85,9 +84,9 @@ class ManageCisController @Inject()(cc: ControllerComponents, override val execu
         Future.successful(BadRequest(Json.obj("message" -> s"Invalid payload: $invalid")))
       },
       payload => {
-        getPenaltyById(payload.hmrcOfficeNumber, payload.schemeReferenceNumber, payload.penaltyId) match {
+        getPenaltyById(service, payload.hmrcOfficeNumber, payload.schemeReferenceNumber, payload.penaltyId) match {
           case Some(penalty) =>
-            Future.successful(Ok(Json.toJson(penalty.copy(penaltyId = None))))
+            Future.successful(Ok(Json.toJson(penalty)))
           case None =>
             Future.successful(NotFound)
         }
@@ -101,7 +100,7 @@ class ManageCisController @Inject()(cc: ControllerComponents, override val execu
         logger.error(s"[ManageCisController][getCisTaxpayer]: Failed to validate payload, errors: $invalid")
         Future.successful(BadRequest(Json.obj("message" -> s"Invalid payload: $invalid"))),
       payload => {
-        val fullPath = s"$basePath/${payload.taxOfficeNumber}/${payload.taxOfficeReference}/taxpayerByEmployerRef.json"
+        val fullPath = s"$basePath/$service/${payload.taxOfficeNumber}/${payload.taxOfficeReference}/taxpayerByEmployerRef.json"
 
         findResource(fullPath) match {
           case Some(content) => Future.successful(jsonResourceAsResponse(fullPath))
@@ -130,21 +129,5 @@ class ManageCisController @Inject()(cc: ControllerComponents, override val execu
         }
       }
     )
-  }
-
-  private def getAllPenalties(hmrcOfficeNumber: String, schemeReferenceNumber: String): Option[List[GetAppealablePenaltyResponse]] = {
-    val fullPath = s"$basePath/$hmrcOfficeNumber/$schemeReferenceNumber/penalties.json"
-
-    for {
-      content <- findResource(fullPath)
-      json <- Try(Json.parse(content)).toOption
-      penalties <- json.validate[List[GetAppealablePenaltyResponse]].asOpt
-    } yield penalties
-  }
-
-  private def getPenaltyById(hmrcOfficeNumber: String, schemeReferenceNumber: String, penaltyId: Long): Option[GetAppealablePenaltyResponse] = {
-    getAllPenalties(hmrcOfficeNumber, schemeReferenceNumber).flatMap { penalties =>
-      penalties.find(_.penaltyId.contains(penaltyId))
-    }
   }
 }
