@@ -66,7 +66,7 @@ trait StubResource extends Results with ContentTypes with Status with Logging {
     finally is.close()
 
   // Penalties helpers
-  val basePath = "/resources/data/pas/"
+  val basePath = "/resources/data/pas"
 
   def getAllPenalties(service: String, hmrcOfficeNumber: String, schemeReferenceNumber: String): Option[List[GetAppealablePenaltyItem]] = {
     val fullPath = s"$basePath/$service/$hmrcOfficeNumber/$schemeReferenceNumber/penalties.json"
