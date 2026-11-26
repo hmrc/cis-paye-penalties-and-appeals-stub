@@ -20,7 +20,10 @@ var scriptVersion = "3.7.0"
 
 var userProfiles = '[' +
     '{ "divider":"Getting Started" }, ' +
-    '{ "description":"Multi Enrolement", "enrolmentKey":"HMRC-CIS-ORG", "identifierName":"TaxOfficeNumber", "identifierValue":"100", "identifierName2":"TaxOfficeReference", "identifierValue2":"AB123", "enrolmentStatus":"Activated", "affinityGroup":"Organisation", "returnId": "" } ' +
+    '{ "description":"0 penalties", "enrolmentKey":"HMRC-CIS-ORG", "identifierName":"TaxOfficeNumber", "identifierValue":"100", "identifierName2":"TaxOfficeReference", "identifierValue2":"EF789", "enrolmentStatus":"Activated", "affinityGroup":"Organisation"}, ' +
+    '{ "description":"1 penalty", "enrolmentKey":"HMRC-CIS-ORG", "identifierName":"TaxOfficeNumber", "identifierValue":"100", "identifierName2":"TaxOfficeReference", "identifierValue2":"GH012", "enrolmentStatus":"Activated", "affinityGroup":"Organisation"}, ' +
+    '{ "description":"3 penalties", "enrolmentKey":"HMRC-CIS-ORG", "identifierName":"TaxOfficeNumber", "identifierValue":"100", "identifierName2":"TaxOfficeReference", "identifierValue2":"AB123", "enrolmentStatus":"Activated", "affinityGroup":"Organisation"}, ' +
+    '{ "description":"15 penalties", "enrolmentKey":"HMRC-CIS-ORG", "identifierName":"TaxOfficeNumber", "identifierValue":"100", "identifierName2":"TaxOfficeReference", "identifierValue2":"CD456", "enrolmentStatus":"Activated", "affinityGroup":"Organisation"} ' +
     ']';
 
 
@@ -386,9 +389,7 @@ function createOverlay() {
                 var color = sectionColors[sectionForRow] || '#64748b';
                 var borderStyle = isError ? '' : ' style="border-left-color:' + color + '"';
 
-                var returnIdHtml = entry.returnId
-                    ? '<span class="row-returnid">' + escapeHtml(entry.returnId) + '</span>'
-                    : '<span class="row-returnid empty">no return id</span>';
+
                 var credIdHtml = entry.hasOwnProperty('authorityId')
                     ? ' · CredID ' + escapeHtml(entry.authorityId)
                     : '';
@@ -402,7 +403,6 @@ function createOverlay() {
                     '<a href="#">' +
                     '<span class="row-title">' + escapeHtml(entry.description) + '</span>' +
                     '<span class="row-meta-line">' +
-                    returnIdHtml +
                     '<span class="row-tech">' + techHtml + '</span>' +
                     '</span>' +
                     '</a>' +
